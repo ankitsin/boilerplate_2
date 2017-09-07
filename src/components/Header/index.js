@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router'
+import { Link } from 'react-router-dom';
 import img59 from '../../assets/59.png'
 import img592 from '../../assets/592.png'
 const {func}  = React.PropTypes

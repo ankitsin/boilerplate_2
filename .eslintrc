@@ -11,6 +11,7 @@
         // Possible Errors
         "comma-dangle": [2, "never"],
         "no-console": 0,
+        "react/prop-types": 0,
         "no-debugger": 1,
         "no-extra-semi": 0,
         "no-inner-declarations": 2,
