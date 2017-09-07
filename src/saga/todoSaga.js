@@ -1,14 +1,13 @@
-import { call, takeLatest, cancelled, put, select } from 'redux-saga/effects';
+import { /* call, */ takeLatest, cancelled, put, select } from 'redux-saga/effects';
 import * as Actions from '../actions/todos';
 import * as ActionCreators from '../actions/todoActionCreator';
-import * as Api from '../services/apiCalls'
-function* addTodo(action) {
+// import * as Api from '../services/apiCalls'
+function* addTodo(/* action */) {
   try {
-    console.log('inside saga')
-    const {params} = action;
+    // const {params} = action;
     yield select();
-    const patientDetails = (yield call(Api.getTodo, params )).data;
-    yield put(ActionCreators.addTodoSucces(patientDetails));
+    // const patientDetails = (yield call(Api.getTodo, params )).data;
+    yield put(ActionCreators.addTodoSucces());
   } catch (e) {
     console.error(e, 'catch block of watchPatientFetch');
   } finally {
