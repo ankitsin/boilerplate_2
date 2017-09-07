@@ -14,6 +14,7 @@
         "react/prop-types": 0,
         "no-debugger": 1,
         "no-extra-semi": 0,
+        "react/no-deprecated": 0,
         "no-inner-declarations": 2,
         "no-regex-spaces": 1,
         "valid-typeof": 2,
