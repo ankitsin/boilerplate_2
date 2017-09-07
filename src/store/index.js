@@ -2,7 +2,7 @@
 import { createStore, applyMiddleware } from 'redux'
 import rootSaga from '../saga/index';
 import createSagaMiddleware, { END } from 'redux-saga';
-import { logger } from '../middleware'
+// import { logger } from '../middleware'
 import rootReducer from '../reducers'
 const sagaMiddleware = createSagaMiddleware();
 export default function cs(initialState) {
@@ -11,10 +11,10 @@ export default function cs(initialState) {
     : createStore
 
   const createStoreWithMiddleware = applyMiddleware(
-    sagaMiddleware,
-    logger
+    sagaMiddleware
+    // logger
   )(create)
-  
+
   if (module.hot) {
     module.hot.accept('../reducers', () => {
       const nextReducer = require('../reducers')

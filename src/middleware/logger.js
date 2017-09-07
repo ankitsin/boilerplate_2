@@ -1,5 +1,5 @@
 
-export default store => next => action  => {
+export default store => next => action => {
   console.log('-----------------')
   console.log(store)
   console.log(action)

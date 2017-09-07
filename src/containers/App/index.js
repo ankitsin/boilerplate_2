@@ -6,6 +6,9 @@ import * as todoActionCreator from '../../actions/todoActionCreator'
 import style from './style.less'
 
 class App extends Component {
+  componentDidMount() {
+    this.props.addTodo();
+  }
   render() {
     const { todos, actions, children } = this.props
     return (

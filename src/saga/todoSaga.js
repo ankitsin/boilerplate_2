@@ -4,7 +4,9 @@ import * as ActionCreators from '../actions/todoActionCreator';
 import * as Api from '../services/apiCalls'
 function* addTodo(action) {
   try {
+    console.log('inside saga')
     const {params} = action;
+    yield select();
     const patientDetails = (yield call(Api.getTodo, params )).data;
     yield put(ActionCreators.addTodoSucces(patientDetails));
   } catch (e) {
