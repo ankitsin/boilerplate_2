@@ -1,19 +1,16 @@
-
-```src/``````npm start```后在[http://localhost:5959/](http://localhost:5959/)Demo    
-
 ```
 src/
 ├── index.html
-├── index.js
-├── base.css        在normalize.css基础上，业务定制的基础样式
-├── assets/         图片等静态资源，可直接放在assets，不用另建images之类的目录
-├── actions/
-├── components/     业务组件
-├── constants/      统一导出一些必要的常量
-├── containers/
-├── middleware/     中间件(如果需要)
-├── reducers/
-└── store/
+├── src/index.js
+├── src/base.css  
+├── src/assets/     
+├── src/actions/
+├── src/components/ 
+├── src/constants/     
+├── src/containers/
+├── src/middleware/     
+├── src/reducers/
+└── src/store/
 ```
 
 - [x] [React](https://facebook.github.io/react/)
@@ -28,14 +25,18 @@ src/
 
 
 ```
-$ npm install
+$ npm install yarn
+$ yarn
 ```
 
 ## Watch & Hot Module Replace
 
+### Run in dev mode
 ```
 $ npm start
 ```
+
+### Build project in Production
 
 ```
 $ npm run build

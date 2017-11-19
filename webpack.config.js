@@ -7,7 +7,7 @@ var webpack = require('webpack'),
 module.exports = {
   context: path.join(__dirname, './src'),
   entry: {
-    app: './index.js',
+    app: './Index.jsx',
     lib: [
       'react',
       'react-dom',
@@ -22,7 +22,16 @@ module.exports = {
     filename: '[name].js'
   },
   module: {
-    loaders: [
+    rules: [
+      {
+        enforce: 'pre', // run before the build process
+        test: /(\.js$|\.jsx$)/,
+        loader: 'eslint-loader',
+        exclude: /node_modules/,
+        options: {
+          fix: true
+        }
+      },
       {
         test: /\.less$/,
         exclude: path.resolve(__dirname, './node_modules'),
@@ -47,7 +56,7 @@ module.exports = {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         loaders: [
-          'react-hot',
+          'react-hot-loader',
           'babel-loader'
         ]
       },
@@ -59,18 +68,33 @@ module.exports = {
     alias: {
       'react': path.join(__dirname, 'node_modules', 'react')
     },
-    extensions: ['', '.js', '.jsx']
+    extensions: ['.js', '.jsx','.json']
   },
-  postcss: [
-    autoprefixer({
-      
-      browsers: [ 'last 10 Chrome versions', 'last 5 Firefox versions', 'Safari >= 6', 'ie > 8' ]
-      
-    })
-  ],
   plugins: [
+    new webpack.LoaderOptionsPlugin({
+      options: {
+        context: __dirname,
+        postcss: [
+          autoprefixer({
+            browsers: ['last 10 Chrome versions', 'last 5 Firefox versions', 'Safari >= 6', 'ie > 8']
+          })
+        ]
+      }
+    }),
     new DashboardPlugin(),
-    new webpack.optimize.CommonsChunkPlugin('lib', 'lib.js'),
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'vendor',
+      minChunks(module) {
+        // this assumes your vendor imports exist in the node_modules directory
+        return module.context && module.context.indexOf('node_modules') !== -1;
+      },
+    }),
+    // The manifest bundle has the code for the webpack runtime
+    // https://webpack.js.org/guides/code-splitting-libraries/#manifest-file
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'manifest',
+      chunks: ['vendor'],
+    }),
     new webpack.DefinePlugin({
       'process.env': { NODE_ENV: JSON.stringify(process.env.NODE_ENV || 'development') }
     }),
@@ -81,6 +105,7 @@ module.exports = {
   devServer: {
     stats: { chunks:false },
     contentBase: './src',
-    hot: true
+    hot: true,
+    port: 6060
   }
 }

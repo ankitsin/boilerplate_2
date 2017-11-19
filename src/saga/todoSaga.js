@@ -20,6 +20,6 @@ function* addTodo(/* action */) {
 export default function* patientHeaderSaga() {
   yield [
     // Only the latest is taken, all others would be ignored/cancelled
-    takeLatest(Actions.ADD_TODO, addTodo)
+    takeLatest(Actions.ADD_TODO, addTodo),
   ];
 }

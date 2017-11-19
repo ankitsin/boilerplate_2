@@ -7,7 +7,7 @@ var webpack = require('webpack'),
 module.exports = {
   context: path.join(__dirname, './src'),
   entry: {
-    app: './index.js',
+    app: './Index.jsx',
     lib: [
       'react',
       'react-dom',
@@ -23,7 +23,7 @@ module.exports = {
     publicPath: 'http://localhost/'  //TODO modify to http://fecdn.qeebike.com/
   },
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.less$/,
         exclude: path.resolve(__dirname, './node_modules'),
@@ -48,7 +48,7 @@ module.exports = {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         loaders: [
-          'react-hot',
+          'react-hot-loader',
           'babel-loader'
         ]
       },
@@ -60,17 +60,32 @@ module.exports = {
     alias: {
       'react': path.join(__dirname, 'node_modules', 'react')
     },
-    extensions: ['', '.js', '.jsx']
+    extensions: ['.js', '.jsx','.json']
   },
-  postcss: [
-    autoprefixer({
-      
-      browsers: [ 'last 10 Chrome versions', 'last 5 Firefox versions', 'Safari >= 6', 'ie > 8' ]
-      
-    })
-  ],
   plugins: [
-    new webpack.optimize.CommonsChunkPlugin('lib', 'lib.[chunkhash:10].js'),
+    new webpack.LoaderOptionsPlugin({
+      options: {
+        context: __dirname,
+        postcss: [
+          autoprefixer({
+            browsers: ['last 10 Chrome versions', 'last 5 Firefox versions', 'Safari >= 6', 'ie > 8']
+          })
+        ]
+      }
+    }),
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'vendor',
+      minChunks(module) {
+        // this assumes your vendor imports exist in the node_modules directory
+        return module.context && module.context.indexOf('node_modules') !== -1;
+      },
+    }),
+    // The manifest bundle has the code for the webpack runtime
+    // https://webpack.js.org/guides/code-splitting-libraries/#manifest-file
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'manifest',
+      chunks: ['vendor'],
+    }),
     new ExtractTextPlugin("[name].[chunkhash:10].css"),
     new webpack.DefinePlugin({
       'process.env': { NODE_ENV: JSON.stringify(process.env.NODE_ENV || 'development') }
