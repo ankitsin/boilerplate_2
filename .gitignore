@@ -1,5 +1,4 @@
-/dist/*
-!/dist/*.html
+dist/*
 static
 
 node_modules
